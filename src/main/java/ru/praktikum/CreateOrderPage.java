@@ -2,10 +2,13 @@ package ru.praktikum;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class CreateOrderPage {
 
     private final WebDriver driver;
+
 
     public CreateOrderPage(WebDriver driver){
         this.driver = driver;
@@ -42,6 +45,15 @@ public class CreateOrderPage {
     public void fillRentDate(String rentDate){
         driver.findElement(By.xpath(".//input[@placeholder='* Когда привезти самокат']")).clear();
         driver.findElement(By.xpath(".//input[@placeholder='* Когда привезти самокат']")).sendKeys(rentDate);
+        driver.findElement(By.cssSelector("div.react-datepicker__day--selected")).click();
+    }
+
+    public void fillRentDateByToday(){
+        Date date = new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
+        String str = formatter.format(date);
+        driver.findElement(By.xpath(".//input[@placeholder='* Когда привезти самокат']")).clear();
+        driver.findElement(By.xpath(".//input[@placeholder='* Когда привезти самокат']")).sendKeys(str);
         driver.findElement(By.cssSelector("div.react-datepicker__day--selected")).click();
     }
 
