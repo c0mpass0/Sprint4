@@ -34,7 +34,7 @@ public class CreateOrderThroughDifferentButtonsTest {
 
     @Before
     public void setUp(){
-        driver = new ChromeDriver();
+        driver = new SafariDriver();
     }
 
     @Test
@@ -42,7 +42,7 @@ public class CreateOrderThroughDifferentButtonsTest {
         MainPage page = new MainPage(driver);
 
         // Use for Safari browser
-        //driver.manage().window().maximize();
+        driver.manage().window().maximize();
         page.open();
 
         WebElement orderButton = driver.findElement(By.xpath(orderButtonXpath));

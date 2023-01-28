@@ -2,20 +2,15 @@ package ru.praktikum;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import org.openqa.selenium.WebElement;
+
+import java.util.List;
+
+import static ru.praktikum.src.Dates.*;
 
 public class CreateOrderPage {
 
     private final WebDriver driver;
-    static Date todayDateRaw = new Date();
-    static Date tomorrowDateRaw = new Date(todayDateRaw.getTime() + (1000 * 60 * 60 * 24));
-    static Date yesterdayDateRaw = new Date(todayDateRaw.getTime() - (1000 * 60 * 60 * 24));
-    static SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
-    public static final String TODAY_DATE = formatter.format(todayDateRaw);
-    public static final String TOMORROW_DATE = formatter.format(tomorrowDateRaw);
-    public static final String YESTERDAY_DATE = formatter.format(yesterdayDateRaw);
-
     public CreateOrderPage(WebDriver driver){
         this.driver = driver;
     }
@@ -37,7 +32,7 @@ public class CreateOrderPage {
         //Отчищаем и заполняем метро
         driver.findElement(By.xpath(".//input[@placeholder='* Станция метро']")).clear();
         driver.findElement(By.xpath(".//input[@placeholder='* Станция метро']")).sendKeys(subway);
-        driver.findElement(By.xpath(".//div[text()='"+ subway +"']")).click();
+        driver.findElement(By.xpath(".//div[contains(text(),'"+ subway +"')]")).click();
 
         //Отчищаем и заполняем телефон
         driver.findElement(By.xpath(".//input[@placeholder='* Телефон: на него позвонит курьер']")).clear();
@@ -70,6 +65,19 @@ public class CreateOrderPage {
         driver.findElement(By.xpath(".//div[text()='"+ term +"']")).click();
     }
 
+    public void setScooterType(String scooterType){
+        if(scooterType != null){
+            driver.findElement(By.id(scooterType)).click();
+        }
+    }
+
+    public void setComment(String comment){
+        if(comment != null){
+            driver.findElement(By.xpath(".//input[@placeholder='Комментарий для курьера']")).clear();
+            driver.findElement(By.xpath(".//input[@placeholder='Комментарий для курьера']")).sendKeys(comment);
+        }
+    }
+
     public void submitOrderPopUp(){
         driver.findElement(By.xpath(".//div[@class='Order_Buttons__1xGrp']/button[text()='Заказать']")).click();
     }
@@ -78,4 +86,8 @@ public class CreateOrderPage {
         driver.findElement(By.xpath(".//div[@class='Order_Buttons__1xGrp']/button[text()='Да']")).click();
     }
 
+    public boolean checkSuccessfullyCreatedOrderPopup(){
+        List<WebElement> finalPopup = driver.findElements(By.xpath(".//div[@class='Order_ModalHeader__3FDaJ' and contains(text(),'Заказ оформлен')]"));
+        return finalPopup.size() != 0;
+    }
 }

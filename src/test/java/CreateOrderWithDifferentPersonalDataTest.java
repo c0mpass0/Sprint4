@@ -5,6 +5,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.safari.SafariDriver;
 import ru.praktikum.CreateOrderPage;
 import ru.praktikum.MainPage;
 
@@ -37,7 +38,7 @@ public class CreateOrderWithDifferentPersonalDataTest {
 
     @Before
     public void setUp(){
-        driver = new ChromeDriver();
+        driver = new SafariDriver();
     }
 
     @Test
@@ -45,7 +46,7 @@ public class CreateOrderWithDifferentPersonalDataTest {
         MainPage page = new MainPage(driver);
 
         // Use for Safari browser
-        //driver.manage().window().maximize();
+        driver.manage().window().maximize();
         page.open();
         page.createOrderTop();
 
