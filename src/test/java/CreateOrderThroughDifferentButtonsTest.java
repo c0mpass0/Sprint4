@@ -4,46 +4,48 @@ import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.safari.SafariDriver;
 import ru.praktikum.CreateOrderPage;
 import ru.praktikum.MainPage;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
+
+import static ru.praktikum.MainPage.BOTTOM_ORDER_BUTTON;
+import static ru.praktikum.MainPage.TOP_ORDER_BUTTON;
+
 @RunWith(Parameterized.class)
 public class CreateOrderThroughDifferentButtonsTest {
     private static WebDriver driver;
-    /* public static final WebElement TOP_ORDER_BUTTON = driver.findElement(By.xpath(".//button[@class='Button_Button__ra12g']"));
-    public static final WebElement BOTTOM_ORDER_BUTTON = driver.findElement(By.xpath(".//div[@class='Home_FinishButton__1_cWm']/button"));
-*/
+    private final String orderButtonXpath;
 
-    private final WebElement orderButton;
-
-    public CreateOrderThroughDifferentButtonsTest(WebElement orderButton){
-        this.orderButton = orderButton;
+    public CreateOrderThroughDifferentButtonsTest(String orderButtonXpath){
+        this.orderButtonXpath = orderButtonXpath;
     }
 
     @Parameterized.Parameters // добавили аннотацию
     public static Object[][] getSumData() {
         return new Object[][] {
-                { driver.findElement(By.xpath(".//button[@class='Button_Button__ra12g']"))},
-                { driver.findElement(By.xpath(".//div[@class='Home_FinishButton__1_cWm']/button"))},
+                { TOP_ORDER_BUTTON},
+                { BOTTOM_ORDER_BUTTON},
         };
     }
 
     @Before
     public void setUp(){
-        driver = new SafariDriver();
+        driver = new ChromeDriver();
     }
 
     @Test
-    public void createOrderThroughBottomButton(){
+    public void createOrderThroughDifferentButtons(){
         MainPage page = new MainPage(driver);
 
         // Use for Safari browser
-        driver.manage().window().maximize();
-
+        //driver.manage().window().maximize();
         page.open();
+
+        WebElement orderButton = driver.findElement(By.xpath(orderButtonXpath));
         page.scrollToElement(orderButton);
         orderButton.click();
 

@@ -8,7 +8,13 @@ import java.util.Date;
 public class CreateOrderPage {
 
     private final WebDriver driver;
-
+    static Date todayDateRaw = new Date();
+    static Date tomorrowDateRaw = new Date(todayDateRaw.getTime() + (1000 * 60 * 60 * 24));
+    static Date yesterdayDateRaw = new Date(todayDateRaw.getTime() - (1000 * 60 * 60 * 24));
+    static SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
+    public static final String TODAY_DATE = formatter.format(todayDateRaw);
+    public static final String TOMORROW_DATE = formatter.format(tomorrowDateRaw);
+    public static final String YESTERDAY_DATE = formatter.format(yesterdayDateRaw);
 
     public CreateOrderPage(WebDriver driver){
         this.driver = driver;
@@ -49,17 +55,19 @@ public class CreateOrderPage {
     }
 
     public void fillRentDateByToday(){
-        Date date = new Date();
-        SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
-        String str = formatter.format(date);
         driver.findElement(By.xpath(".//input[@placeholder='* Когда привезти самокат']")).clear();
-        driver.findElement(By.xpath(".//input[@placeholder='* Когда привезти самокат']")).sendKeys(str);
+        driver.findElement(By.xpath(".//input[@placeholder='* Когда привезти самокат']")).sendKeys(TODAY_DATE);
         driver.findElement(By.cssSelector("div.react-datepicker__day--selected")).click();
     }
 
     public void fillRentTerm(){
         driver.findElement(By.cssSelector("div.Dropdown-placeholder")).click();
         driver.findElement(By.xpath(".//div[text()='сутки']")).click();
+    }
+
+    public void fillRentTerm(String term){
+        driver.findElement(By.cssSelector("div.Dropdown-placeholder")).click();
+        driver.findElement(By.xpath(".//div[text()='"+ term +"']")).click();
     }
 
     public void submitOrderPopUp(){
