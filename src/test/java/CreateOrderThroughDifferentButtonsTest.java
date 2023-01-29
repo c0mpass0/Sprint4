@@ -1,11 +1,11 @@
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.safari.SafariDriver;
 import ru.praktikum.CreateOrderPage;
 import ru.praktikum.MainPage;
 
@@ -34,15 +34,13 @@ public class CreateOrderThroughDifferentButtonsTest {
 
     @Before
     public void setUp(){
-        driver = new SafariDriver();
+        driver = new ChromeDriver();
     }
 
     @Test
     public void createOrderThroughDifferentButtons(){
         MainPage page = new MainPage(driver);
 
-        // Use for Safari browser
-        driver.manage().window().maximize();
         page.open();
 
         WebElement orderButton = driver.findElement(By.xpath(orderButtonXpath));
@@ -57,6 +55,8 @@ public class CreateOrderThroughDifferentButtonsTest {
         order.fillRentTerm();
         order.submitOrderPopUp();
         order.submitOrderPopUpYes();
+
+        Assert.assertTrue("Окно об успешном создании заказа не появилось", order.checkSuccessfullyCreatedOrderPopup());
     }
 
     @After

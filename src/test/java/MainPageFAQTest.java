@@ -43,7 +43,7 @@ public class MainPageFAQTest {
     }
 
     @Test
-    public void checkImportantQuestionsText(){
+    public void checkFrequentlyAskedQuestionsText(){
 
         MainPage page = new MainPage(driver);
 
