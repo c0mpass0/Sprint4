@@ -24,7 +24,7 @@ public class CreateOrderThroughDifferentButtonsTest {
         this.orderButtonXpath = orderButtonXpath;
     }
 
-    @Parameterized.Parameters // добавили аннотацию
+    @Parameterized.Parameters
     public static Object[][] getSumData() {
         return new Object[][] {
                 { TOP_ORDER_BUTTON},

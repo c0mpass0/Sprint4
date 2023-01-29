@@ -4,6 +4,10 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
 
 public class MainPage {
 
@@ -34,5 +38,23 @@ public class MainPage {
 
     public void scrollToElement(WebElement element){
         ((JavascriptExecutor)driver).executeScript("arguments[0].scrollIntoView();", element);
+    }
+    public void waitForElement(WebElement element){
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(2));
+        wait.until(ExpectedConditions.visibilityOf(element));
+    }
+
+    public WebElement getFAQHeader(String question){
+        return driver.findElement(By.id(question));
+    }
+
+    public WebElement getFAQAnswer(String question){
+        return driver.findElement(By.xpath(".//div[@id='"+question+"']/../following::div[1]"));
+    }
+    public void openFAQ(String question){
+        driver.findElement(By.id(question)).click();
+    }
+    public String getFAQAnswerText(String question){
+       return driver.findElement(By.xpath(".//div[@id='"+question+"']/../following::div[1]")).getText();
     }
 }

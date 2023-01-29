@@ -11,6 +11,7 @@ import ru.praktikum.MainPage;
 
 import java.time.Duration;
 
+
 import static org.junit.Assert.assertEquals;
 
 public class MainPageTests {
